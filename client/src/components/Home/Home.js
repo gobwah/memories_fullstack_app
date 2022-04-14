@@ -1,42 +1,54 @@
 import {
+    AppBar,
+    Button,
     Container,
     Grid,
     Grow,
     Paper,
-    AppBar,
     TextField,
-    Button,
 } from '@material-ui/core'
+import ChipInput from 'material-ui-chip-input'
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { getPosts, getPostsBySearch } from '../../actions/posts'
+import { useHistory, useLocation } from 'react-router-dom'
+import { getPostsBySearch } from '../../actions/posts'
 import Form from '../Form/Form'
+import Pagination from '../Pagination'
 import Posts from '../Posts/Posts'
 import useStyles from './styles'
-import Pagination from '../Pagination'
-import { useHistory, useLocation } from 'react-router-dom'
-import ChipInput from 'material-ui-chip-input'
+import queryString from 'query-string'
 
 function useQuery() {
-    return new URLSearchParams(useLocation().search)
+    return queryString.parse(useLocation().search)
 }
 
 const Home = () => {
-    const [currentId, setCurrentId] = useState(null)
     const classes = useStyles()
-    const dispatch = useDispatch()
     const query = useQuery()
-    const history = useHistory()
-    const page = query.get('page') || 1
-    const searchQuery = query.get('searchQuery')
+    const page = query.page || 1
+    const searchQuery = query.searchQuery || ''
+    const tagsParam = query.tags || ''
+
+    const [currentId, setCurrentId] = useState(null)
+    const dispatch = useDispatch()
+
     const [search, setSearch] = useState('')
     const [tags, setTags] = useState([])
+    const history = useHistory()
+
+    useEffect(() => {
+        if (searchQuery.trim() || tagsParam.trim()) {
+            console.log('searchParams', searchQuery)
+            console.log('tagsParam', tagsParam)
+            dispatch(getPostsBySearch({ search: searchQuery, tags: tagsParam }))
+        }
+    }, [])
 
     const searchPost = () => {
-        if (search.trim() || tags) {
+        if (search.trim() || tags.length) {
             dispatch(getPostsBySearch({ search, tags: tags.join(',') }))
             history.push(
-                `posts/search?searchQuery=${search || 'none'}&tags=${tags.join(
+                `/posts/search?searchQuery=${search || 'none'}&tags=${tags.join(
                     ','
                 )}`
             )

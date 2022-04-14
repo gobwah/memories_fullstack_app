@@ -29,7 +29,7 @@ const PostDetails = () => {
         return null
     }
 
-    const openPost = (_id) => history.push(`/post/${_id}`)
+    const openPost = (_id) => history.push(`/posts/${_id}`)
 
     if (isLoading) {
         return (
