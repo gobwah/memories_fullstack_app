@@ -1,6 +1,10 @@
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import User from '../models/user.js'
+import dotenv from 'dotenv'
+
+dotenv.config()
+const secret = process.env.JWT_SECRET
 
 export const signin = async (req, res) => {
     const { email, password } = req.body
@@ -16,12 +20,13 @@ export const signin = async (req, res) => {
             return res.status(400).json({ msg: 'Invalid credentials' })
         }
 
-        const token = jwt.sign({ email: user.email, id: user._id }, 'test', {
+        const token = jwt.sign({ email: user.email, id: user._id }, secret, {
             expiresIn: '1h',
         })
+
         res.status(200).json({ result: user, token })
     } catch (error) {
-        res.status(500).json({ msg: 'Server error' })
+        res.status(500).json({ message: 'Server error' })
     }
 }
 
@@ -37,8 +42,8 @@ export const signup = async (req, res) => {
         if (password !== confirmPassword) {
             return res.status(400).json({ msg: 'Passwords do not match' })
         }
-        const hashedPassword = await bcrypt.hash(password, 12)
 
+        const hashedPassword = await bcrypt.hash(password, 12)
         const newUser = await User.create({
             email,
             password: hashedPassword,
@@ -47,11 +52,11 @@ export const signup = async (req, res) => {
 
         const token = jwt.sign(
             { email: newUser.email, id: newUser._id },
-            'test',
+            secret,
             { expiresIn: '1h' }
         )
 
-        res.status(200).json({ result: newUser, token })
+        res.status(201).json({ result: newUser, token })
     } catch (error) {
         res.status(500).json({ msg: 'Server error' })
     }
