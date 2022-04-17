@@ -9,6 +9,7 @@ import {
     START_LOADING,
     END_LOADING,
     FETCH_POST,
+    COMMENT,
 } from '../constants/actionTypes'
 
 export const getPost = (id) => async (dispatch) => {
@@ -16,7 +17,6 @@ export const getPost = (id) => async (dispatch) => {
         dispatch({ type: START_LOADING })
         console.log(FETCH_POST)
         const { data } = await api.fetchPost(id)
-        console.log(data)
         dispatch({ type: FETCH_POST, payload: { post: data } })
     } catch (error) {
         console.log(error)
@@ -30,7 +30,6 @@ export const getPosts = (page) => async (dispatch) => {
         const {
             data: { data, currentPage, numberOfPages },
         } = await api.fetchPosts(page)
-        console.log({ data, currentPage, numberOfPages })
         dispatch({
             type: FETCH_ALL,
             payload: { data, currentPage, numberOfPages },
@@ -48,7 +47,6 @@ export const getPostsBySearch = (searchQuery) => async (dispatch) => {
         const {
             data: { data },
         } = await api.fetchPostsBySearch(searchQuery)
-        console.log({ data })
         dispatch({ type: FETCH_BY_SEARCH, payload: data })
         dispatch({ type: END_LOADING })
     } catch (error) {
@@ -61,7 +59,6 @@ export const createPost = (newPost, history) => async (dispatch) => {
         dispatch({ type: START_LOADING })
         console.log(CREATE)
         const { data } = await api.createPost(newPost)
-        console.log({ data })
         history.push(`/posts/${data._id}`)
         dispatch({ type: CREATE, payload: data })
     } catch (error) {
@@ -73,7 +70,6 @@ export const updatePost = (id, post) => async (dispatch) => {
     try {
         console.log(UPDATE)
         const { data } = await api.updatePost(id, post)
-        console.log({ data })
         dispatch({ type: UPDATE, payload: data })
     } catch (error) {
         console.log(error)
@@ -84,7 +80,6 @@ export const deletePost = (id) => async (dispatch) => {
     try {
         console.log(DELETE)
         await api.deletePost(id)
-        console.log('ok')
         dispatch({ type: DELETE, payload: id })
     } catch (error) {
         console.log(error)
@@ -95,8 +90,18 @@ export const likePost = (id) => async (dispatch) => {
     try {
         console.log(LIKE)
         const { data } = await api.likePost(id)
-        console.log({ data })
         dispatch({ type: LIKE, payload: data })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const commentPost = (value, id) => async (dispatch) => {
+    try {
+        console.log(COMMENT)
+        const { data } = await api.comment(value, id)
+        dispatch({ type: COMMENT, payload: data })
+        return data.comments
     } catch (error) {
         console.log(error)
     }
