@@ -1,5 +1,4 @@
 import { Button, TextField, Typography } from '@material-ui/core'
-import { mergeClasses } from '@material-ui/styles'
 import React, { useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { commentPost } from '../../actions/posts'
