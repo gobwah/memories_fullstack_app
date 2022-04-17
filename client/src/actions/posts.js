@@ -17,6 +17,7 @@ export const getPost = (id) => async (dispatch) => {
         dispatch({ type: START_LOADING })
         console.log(FETCH_POST)
         const { data } = await api.fetchPost(id)
+        console.log(data)
         dispatch({ type: FETCH_POST, payload: { post: data } })
     } catch (error) {
         console.log(error)

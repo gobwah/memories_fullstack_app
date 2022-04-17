@@ -67,7 +67,6 @@ const Auth = () => {
     }
 
     const googleFailure = (err) => {
-        console.log('err')
         console.log(err)
     }
 

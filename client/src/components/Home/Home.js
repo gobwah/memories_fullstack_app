@@ -38,8 +38,6 @@ const Home = () => {
 
     useEffect(() => {
         if (searchQuery.trim() || tagsParam.trim()) {
-            console.log('searchParams', searchQuery)
-            console.log('tagsParam', tagsParam)
             dispatch(getPostsBySearch({ search: searchQuery, tags: tagsParam }))
         }
     }, [])
