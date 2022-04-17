@@ -5,14 +5,17 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { createPost, updatePost } from '../../actions/posts'
 import useStyles from './styles'
+import ChipInput from 'material-ui-chip-input'
+
+const initialSate = {
+    title: '',
+    message: '',
+    tags: [],
+    selectedFile: '',
+}
 
 const Form = ({ currentId, setCurrentId }) => {
-    const [postData, setPostData] = useState({
-        title: '',
-        message: '',
-        tags: '',
-        selectedFile: '',
-    })
+    const [postData, setPostData] = useState(initialSate)
     const post = useSelector((state) =>
         currentId ? state.posts.posts.find((p) => p._id === currentId) : null
     )
@@ -22,6 +25,10 @@ const Form = ({ currentId, setCurrentId }) => {
     const history = useHistory()
 
     useEffect(() => {
+        if (!post?.title) {
+            clear()
+        }
+
         if (post) {
             setPostData(post)
         }
@@ -43,13 +50,8 @@ const Form = ({ currentId, setCurrentId }) => {
     }
 
     const clear = () => {
-        setCurrentId(null)
-        setPostData({
-            title: '',
-            message: '',
-            tags: '',
-            selectedFile: '',
-        })
+        setCurrentId(0)
+        setPostData(initialSate)
     }
 
     if (!user?.result?.name) {
@@ -62,6 +64,17 @@ const Form = ({ currentId, setCurrentId }) => {
         )
     }
 
+    const handleAddChip = (tag) => {
+        setPostData({ ...postData, tags: [...postData.tags, tag] })
+    }
+
+    const handleDeleteChip = (chipToDelete) => {
+        setPostData({
+            ...postData,
+            tags: postData.tags.filter((tag) => tag !== chipToDelete),
+        })
+    }
+
     return (
         <Paper className={classes.paper} elevation={6}>
             <form
@@ -71,7 +84,9 @@ const Form = ({ currentId, setCurrentId }) => {
                 onSubmit={handleSubmit}
             >
                 <Typography variant="h6">
-                    {currentId ? 'Editing' : 'Creating'} a memory
+                    {currentId
+                        ? `Editing "${post?.title}"`
+                        : 'Creating a Memory'}
                 </Typography>
                 <TextField
                     name="title"
@@ -88,24 +103,24 @@ const Form = ({ currentId, setCurrentId }) => {
                     variant="outlined"
                     label="Message"
                     fullWidth
+                    multiline
+                    minRows={4}
                     value={postData.message}
                     onChange={(e) =>
                         setPostData({ ...postData, message: e.target.value })
                     }
                 />
-                <TextField
-                    name="tags"
-                    variant="outlined"
-                    label="Tags"
-                    fullWidth
-                    value={postData.tags}
-                    onChange={(e) =>
-                        setPostData({
-                            ...postData,
-                            tags: e.target.value.split(','),
-                        })
-                    }
-                />
+                <div style={{ padding: '5px 0', width: '94%' }}>
+                    <ChipInput
+                        name="tags"
+                        variant="outlined"
+                        label="Tags"
+                        fullWidth
+                        value={postData.tags}
+                        onAdd={(chip) => handleAddChip(chip)}
+                        onDelete={(chip) => handleDeleteChip(chip)}
+                    />
+                </div>
                 <div className={classes.fileInput}>
                     <FileBase
                         type="file"

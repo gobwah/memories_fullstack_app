@@ -1,9 +1,9 @@
-import React, { useState, useRef } from 'react'
-import { Typography, TextField, Button } from '@material-ui/core'
-import { useDispatch } from 'react-redux'
-import useStyles from './styles'
+import { Button, TextField, Typography } from '@material-ui/core'
 import { mergeClasses } from '@material-ui/styles'
+import React, { useRef, useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { commentPost } from '../../actions/posts'
+import useStyles from './styles'
 
 const CommentSection = ({ post }) => {
     const classes = useStyles()
@@ -23,7 +23,7 @@ const CommentSection = ({ post }) => {
 
     return (
         <div>
-            <div className={mergeClasses.commentsOuterContainer}>
+            <div className={classes.commentsOuterContainer}>
                 <div className={classes.commentsInnerContainer}>
                     <Typography gutterBottom variant="h6">
                         Comments
@@ -43,7 +43,7 @@ const CommentSection = ({ post }) => {
                         </Typography>
                         <TextField
                             fullWidth
-                            rows={4}
+                            minRows={4}
                             variant="outlined"
                             label="Comment"
                             multiline

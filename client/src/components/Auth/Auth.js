@@ -15,6 +15,7 @@ import Icon from './Icon'
 import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { signin, signup } from '../../actions/auth.js'
+import { AUTH } from '../../constants/actionTypes'
 
 const initialState = {
     firstName: '',
@@ -50,6 +51,7 @@ const Auth = () => {
     }
 
     const switchMode = () => {
+        setFormData(initialState)
         setIsSignup((prevIsSignup) => !prevIsSignup)
         setShowPassword(false)
     }
@@ -59,7 +61,7 @@ const Auth = () => {
         const token = res?.tokenId
 
         try {
-            dispatch({ type: 'AUTH', data: { result, token } })
+            dispatch({ type: AUTH, data: { result, token } })
             history.push('/')
         } catch (error) {
             console.log(error)

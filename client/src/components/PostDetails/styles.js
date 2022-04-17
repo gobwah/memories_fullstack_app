@@ -12,7 +12,7 @@ export default makeStyles((theme) => ({
         width: '100%',
         [theme.breakpoints.down('sm')]: {
             flexWrap: 'wrap',
-            flexDirection: 'column',
+            flexDirection: 'column-reverse',
         },
     },
     section: {
@@ -22,8 +22,10 @@ export default makeStyles((theme) => ({
     },
     imageSection: {
         marginLeft: '20px',
+        maxWidth: '50%',
         [theme.breakpoints.down('sm')]: {
             marginLeft: 0,
+            maxWidth: '100%',
         },
     },
     recommendedPosts: {

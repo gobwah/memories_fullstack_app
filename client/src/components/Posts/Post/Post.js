@@ -39,27 +39,20 @@ const Post = ({ post, setCurrentId }) => {
 
     const Likes = () => {
         if (likes.length > 0) {
-            if (likes.find((like) => like === userId)) {
-                return (
-                    <>
-                        <ThumbUpAltIcon fontSize="small" />
-                        &nbsp;
-                        {likes.length > 2
-                            ? `You and ${likes.length - 1} others`
-                            : `${likes.length} like${
-                                  likes.length > 1 ? 's' : ''
-                              }`}
-                    </>
-                )
-            } else {
-                return (
-                    <>
-                        <ThumbUpAltOutlinedIcon fontSize="small" />
-                        &nbsp;{likes.length}{' '}
-                        {likes.length === 1 ? 'Like' : 'Likes'}
-                    </>
-                )
-            }
+            return likes.find((like) => like === userId) ? (
+                <>
+                    <ThumbUpAltIcon fontSize="small" />
+                    &nbsp;
+                    {likes.length > 2
+                        ? `You and ${likes.length - 1} others`
+                        : `${likes.length} like${likes.length > 1 ? 's' : ''}`}
+                </>
+            ) : (
+                <>
+                    <ThumbUpAltOutlinedIcon fontSize="small" />
+                    &nbsp;{likes.length} {likes.length === 1 ? 'Like' : 'Likes'}
+                </>
+            )
         }
 
         return (
@@ -76,7 +69,12 @@ const Post = ({ post, setCurrentId }) => {
 
     return (
         <Card className={classes.card} raised elevation={6}>
-            <ButtonBase className={classes.cardAction} onClick={openPost}>
+            <ButtonBase
+                className={classes.cardAction}
+                onClick={openPost}
+                component="span"
+                name="test"
+            >
                 <CardMedia
                     className={classes.media}
                     image={post.selectedFile}
@@ -117,7 +115,7 @@ const Post = ({ post, setCurrentId }) => {
                         color="textSecondary"
                         component="p"
                     >
-                        {post.message}
+                        {post.message.split(' ').splice(0, 20).join(' ')}...
                     </Typography>
                 </CardContent>
             </ButtonBase>

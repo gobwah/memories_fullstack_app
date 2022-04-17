@@ -6,6 +6,7 @@ import useStyles from './styles'
 import { Link, useHistory, useLocation } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import decode from 'jwt-decode'
+import { LOGOUT } from '../../constants/actionTypes'
 
 const Navbar = () => {
     const classes = useStyles()
@@ -17,7 +18,7 @@ const Navbar = () => {
     const location = useLocation()
 
     const logout = () => {
-        dispatch({ type: 'LOGOUT' })
+        dispatch({ type: LOGOUT })
         history.push('/')
         setUser(null)
     }
@@ -43,13 +44,13 @@ const Navbar = () => {
                     className={classes.image}
                     src={memoriesText}
                     alt="icon"
-                    height="45"
+                    height="45px"
                 />
                 <img
                     className={classes.image}
                     src={memoriesLogo}
                     alt="icon"
-                    height="40"
+                    height="40px"
                 />
             </Link>
             <Toolbar className={classes.toolbar}>

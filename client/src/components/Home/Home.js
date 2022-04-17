@@ -13,7 +13,7 @@ import { useDispatch } from 'react-redux'
 import { useHistory, useLocation } from 'react-router-dom'
 import { getPostsBySearch } from '../../actions/posts'
 import Form from '../Form/Form'
-import Pagination from '../Pagination'
+import Paginate from '../Paginate'
 import Posts from '../Posts/Posts'
 import useStyles from './styles'
 import queryString from 'query-string'
@@ -116,7 +116,7 @@ const Home = () => {
                         />
                         {!searchQuery && !tags.length && (
                             <Paper elevation={6} className={classes.pagination}>
-                                <Pagination page={page} />
+                                <Paginate page={page} />
                             </Paper>
                         )}
                     </Grid>
