@@ -28,7 +28,12 @@ const CommentSection = ({ post }) => {
                         Comments
                     </Typography>
                     {comments.map((c, i) => (
-                        <Typography key={i} gutterBottom varaint="subtitle1">
+                        <Typography
+                            key={i}
+                            gutterBottom
+                            varaint="subtitle1"
+                            style={{ wordBreak: 'break-word' }}
+                        >
                             <strong>{c.split(': ')[0]}</strong>:{' '}
                             {c.split(': ')[1]}
                         </Typography>
@@ -36,7 +41,7 @@ const CommentSection = ({ post }) => {
                     <div ref={commentsRef} />
                 </div>
                 {user?.result?.name && (
-                    <div style={{ width: '70%' }}>
+                    <div style={{ width: '100%' }}>
                         <Typography gutterBottom variant="h6">
                             Write a Comment
                         </Typography>
@@ -51,7 +56,6 @@ const CommentSection = ({ post }) => {
                         />
                         <Button
                             style={{ marginTop: '10px' }}
-                            fullWidth
                             disabled={!comment}
                             variant="contained"
                             onClick={handleClick}

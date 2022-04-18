@@ -71,8 +71,6 @@ const PostDetails = () => {
                         <strong>Realtime Chat - coming soon!</strong>
                     </Typography>
                     <Divider style={{ margin: '20px 0' }} />
-                    <CommentSection post={post} />
-                    <Divider style={{ margin: '20px 0' }} />
                 </div>
                 <div className={classes.imageSection}>
                     <img
@@ -85,6 +83,8 @@ const PostDetails = () => {
                     />
                 </div>
             </div>
+            <Divider style={{ margin: '20px 0' }} />
+            <CommentSection post={post} />
             {recommendedPosts.length > 0 && (
                 <div className={classes.section}>
                     <Typography gutterBottom variant="h5">
