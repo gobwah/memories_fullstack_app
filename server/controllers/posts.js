@@ -80,8 +80,8 @@ export const updatePost = async (req, res) => {
         return res.status(404).send({ message: 'Invalid ID' })
     }
 
-    const updatedPost = { creator, title, message, tags, selectedFile, _id: id }
-    await PostMessage.findByIdAndUpdate(id, updatedPost, { new: true })
+    const updatedPost = { creator, title, message, tags, selectedFile, _id }
+    await PostMessage.findByIdAndUpdate(_id, updatedPost, { new: true })
 
     res.json(updatedPost)
 }
