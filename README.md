@@ -29,7 +29,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/gobwah/memories_fullstack_app">
+  <a href="https://memories-gobwah.vercel.app/">
     <img src="client/public/memories.png" alt="Logo" width="80" height="80">
   </a>
 
@@ -41,7 +41,7 @@
     <a href="https://github.com/gobwah/memories_fullstack_app"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/gobwah/memories_fullstack_app">View Demo</a>
+    <a href="https://memories-gobwah.vercel.app/">View Demo</a>
     ·
     <a href="https://github.com/gobwah/memories_fullstack_app/issues">Report Bug</a>
     ·
@@ -81,7 +81,7 @@
 
 ## About The Project
 
-![Memories Screen Shot][product-screenshot]
+[![Memories Screen Shot][product-screenshot]](https://memories-gobwah.vercel.app/)
 
 The App is called "Memories" and it is a simple social media app that allows users to post interesting events that happened in their lives. It is a full-stack application using React, Node.js, Express & MongoDB.
 
